@@ -1,0 +1,3 @@
+[submodule "StackelbergEquilibribumSolvers"]
+	path = StackelbergEquilibribumSolvers
+	url = https://github.com/sailik1991/StackelbergEquilibribumSolvers
