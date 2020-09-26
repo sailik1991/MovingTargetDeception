@@ -190,6 +190,7 @@ if __name__ == "__main__":
     all_ids_events = cvss_vectors.keys()
     obj_values = []
     patch_sets_used = []
+    strategies = []
     for event in all_ids_events:
         attacker_probs = bayesian_prob_update(initial_attacker_probs, event, e)
         generate_game_file(cvss_scores, hp_info, e, attacker_probs)
@@ -212,6 +213,7 @@ if __name__ == "__main__":
                 obj_val = float(line.split(' -> ')[1])
                 objs.append(round(obj_val, 3))
 
+        strategies.append(strategy)
         obj_values.append(objs)
         patch_sets_used.append(
             (sum([1 if strategy[ps] > 0 else 0 for ps in strategy]), len(strategy.keys()))
@@ -223,3 +225,13 @@ if __name__ == "__main__":
 
     # Print strategies used
     print(patch_sets_used)
+
+    avg_strategy = {}
+    for i in patchsets_to_attacks.keys():
+        for strategy in strategies:
+            try:
+                avg_strategy[i] = strategy[i]
+            except:
+                avg_strategy[i] += strategy[i]
+    # print(avg_strategy)
+    print(sorted(avg_strategy.items(), key=lambda item:item[1]))
